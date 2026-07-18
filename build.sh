@@ -98,7 +98,7 @@ fi
 _setup_toolchain "$2"
 
 if [ "$1" == "--all" ]; then
-	for name in scripts/*.sh; do
+	for name in scripts/Zip.sh; do # HACK
 		name=${name#*/}
 		( _run_build "${name%.*}" "$2" )
 	done

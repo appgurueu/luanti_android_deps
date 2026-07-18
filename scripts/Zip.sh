@@ -6,14 +6,18 @@ download () {
 }
 
 build () {
+	old_pwd="${PWD}"
 	(
 		cd $srcdir/libzip
 		mkdir -p build
 		(
 			cd build
-			cmake "${CMAKE_FLAGS[@]}" ..
+			cmake "${CMAKE_FLAGS[@]}" -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX="${old_pwd}" ..
 			cmake --build . -j $(nproc)
 			cmake --install .
 		)
 	)
+	# TODO extract to copy ()
+	mv lib/*.a $pkgdir/
+	mv include/*.h $pkgdir/
 }
